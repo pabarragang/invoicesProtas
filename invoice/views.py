@@ -73,7 +73,6 @@ def modifiedProduct(request):
         response['response'] = "Without id"
         return HttpResponse(json.dumps(response))
 
-
 def getProduct(request):
     response = {}
     if request.POST['id']:
@@ -90,3 +89,103 @@ def getProduct(request):
     else:
         response['response'] = "Without id"
         return HttpResponse(json.dumps(response))
+
+def getDocumentTypes(request):
+	response = {}
+	document_types = Document_type.objects.all()
+	for document_type in document_types:
+		response[str(document_type.id)] = document_type.name
+	return HttpResponse(json.dumps(response))
+
+def createClient(request):
+	response = {}
+	if request.POST['document']:
+		document = request.POST['document']
+		if request.POST['name']:
+			name = request.POST['name']
+			if request.POST['last_name']:
+				last_name = request.POST['last_name']
+				if request.POST['address']:
+					address = request.POST['address']
+					if request.POST['cell_phone']:
+						cell_phone = request.POST['cell_phone']
+						if request.POST['document_type']:
+							document_type = request.POST['document_type']
+							phone = None
+							if request.POST['phone']:
+								phone = request.POST['phone']
+							client = Client(document=document,name=name,last_name=last_name,address=address,phone=phone,cell_phone=cell_phone,document_type=Document_type.objects.get(id=document_type))
+							client.save()
+							response['response'] = "Created"
+						else:
+							response['response'] = "Without document_type"
+					else:
+						response['response'] = "Without cell_phone"
+				else:
+					response['response'] = "Without address"
+			else:
+				response['response'] = "Without last_name"
+		else:
+			response['response'] = "Without name"
+	else:
+		response['response'] = "Without document"
+	return HttpResponse(json.dumps(response))
+
+def removeClient(request):
+	response = {}
+	if request.POST['id']:
+		client = Client.objects.get(id=request.POST['id'])
+		if client:
+			client.delete()
+			response['response'] = "Deleted"
+		else:
+			response['response'] = "This client does not exist"
+	else:
+		response['response'] = "Without id"
+	return HttpResponse(json.dumps(response))
+
+def modifiedClient(request):
+	response = {}
+	if request.POST['id']:
+		client = Client.objects.get(id=request.POST['id'])
+		if client:
+			if request.POST['document']:
+				client.document = request.POST['document']
+			if request.POST['name']:
+				client.name = request.POST['name']
+			if request.POST['last_name']:
+				client.last_name = request.POST['last_name']
+			if request.POST['address']:
+				client.address = request.POST['address']
+			if request.POST['cell_phone']:
+				client.cell_phone = request.POST['cell_phone']
+			if request.POST['document_type']:
+				client.document_type = request.POST['document_type']
+			if request.POST['phone']:
+				client.phone = request.POST['phone']
+			client.save()
+		else:
+			response['response'] = "This client does not exist"
+	else:
+		response['response'] = "Without id"
+	return HttpResponse(json.dumps(response))
+
+def getClient(request):
+	response = {}
+	if request.POST['id']:
+		client = Client.objects.get(id=request.POST['id'])
+		if client:
+			response['document']=client.document
+			response['name']=client.name
+			response['last_name']=client.last_name
+			response['address']=client.address
+			response['cell_phone']=client.cell_phone
+			response['document_type']=client.document_type
+			response['phone']=client.phone
+			return HttpResponse(json.dumps(response))
+		else:
+			response['response'] = "This client does not exist"
+			return HttpResponse(json.dumps(response))
+	else:
+		response['response'] = "Without id"
+		return HttpResponse(json.dumps(response))
