@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'invoice',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,16 @@ WSGI_APPLICATION = 'invoicesProtas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'INVOICESPROTAS',#get_env_setting('TSS_DB_NAME'),
+        'USER': 'root',#get_env_setting('TSS_DB_USER'),
+        'PASSWORD': 'ubuntu123',#get_env_setting('TSS_DB_PWD'),
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+         "init_command": "SET foreign_key_checks = 0;",
+                    },
+
     }
 }
 
