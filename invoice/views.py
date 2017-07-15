@@ -118,7 +118,7 @@ def createClient(request):
 		response['response'] = "Without document"
 	return HttpResponse(json.dumps(response))
 
-def removeProduct(request):
+def removeClient(request):
 	response = {}
 	if request.POST['id']:
 		client = Client.objects.get(id=request.POST['id'])
@@ -131,7 +131,7 @@ def removeProduct(request):
 		response['response'] = "Without id"
 	return HttpResponse(json.dumps(response))
 
-def modifiedProduct(request):
+def modifiedClient(request):
 	response = {}
 	if request.POST['id']:
 		client = Client.objects.get(id=request.POST['id'])

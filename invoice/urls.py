@@ -19,4 +19,12 @@ from invoice import views
 
 urlpatterns = [
     url(r'^create_product/$', views.createProduct),
+    url(r'^remove_product/$', views.removeProduct),
+    url(r'^modified_product/$', views.modifiedProduct),
+    url(r'^get_product/$', views.getProduct),
+    url(r'^get_document_types/$', views.getDocumenttypes),
+    url(r'^create_client/$', views.createClient),
+    url(r'^remove_client/$', views.removeClient),
+    url(r'^modified_client/$', views.modifiedClient),
+    url(r'^get_client/$', views.getClient),
 ]
