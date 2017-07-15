@@ -1,0 +1,11 @@
+#Python compiled files
+*.pyc
+
+#PyCharm stuff
+.idea/
+
+#Development database
+db.sqlite3
+*.db
+*.orig
+*.bak
