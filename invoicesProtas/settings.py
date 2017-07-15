@@ -55,7 +55,7 @@ ROOT_URLCONF = 'invoicesProtas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,15 +77,11 @@ WSGI_APPLICATION = 'invoicesProtas.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'INVOICESPROTAS',#get_env_setting('TSS_DB_NAME'),
-        'USER': 'root',#get_env_setting('TSS_DB_USER'),
-        'PASSWORD': 'ubuntu123',#get_env_setting('TSS_DB_PWD'),
+        'NAME': 'INVOICESPROTAS',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-         "init_command": "SET foreign_key_checks = 0;",
-                    },
-
     }
 }
 
@@ -126,4 +122,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = '/data/apache/serve/static/'
+
+# Login Settings
+# http://django-marcador.keimlink.de/es/frontend_login.html
+
+LOGIN_REDIRECT_URL = 'conceptos'
