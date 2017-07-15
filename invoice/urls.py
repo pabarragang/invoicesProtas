@@ -18,5 +18,7 @@ from django.contrib import admin
 from invoice import views
 
 urlpatterns = [
-    url(r'^create_product/$', views.createProduct),
+    url(r'^products_list/$', views.getProducts),
+    url(r'^products_form/$', views.formProducts),
+    url(r'^product_create/$', views.createProduct),
 ]
