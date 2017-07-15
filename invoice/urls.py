@@ -33,4 +33,6 @@ urlpatterns = [
     url(r'^remove_invoice/$', views.removeInvoice),
     url(r'^modified_invoice/$', views.modifiedInvoice),
     url(r'^get_invoice/$', views.getInvoice),
+    url(r'^products_add/$', views.addProducts),
+    url(r'^products_remove_invoice/$', views.removeProducts),
 ]

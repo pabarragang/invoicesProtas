@@ -286,3 +286,31 @@ def getInvoice(request):
 		response['response'] = "Without id"
 		return HttpResponse(json.dumps(response))
 
+def addProducts(request):
+	response = {}
+	if request.POST['invoice_id']:
+		invoice = Invoice.objects.get(id=request.POST['invoice_id'])
+		if request.POST['product_list'] and request.POST['quantity_list']:
+			products = json.loads(request.POST['product_list'])
+			quantities = json.loads(request.POST['quantity_list'])
+			for product in products:
+				product_to_add = Product.objects.get(id=product.id)
+				invoices_has_product = Invoices_has_product(invoice=invoice,product=product_to_add,quantity=quantities[product.id])
+				invoices_has_product.save()
+		else:
+			response['response'] = "Without products or quantities"
+	else:
+		response['response'] = "Without invoice"
+
+def removeProducts(request):
+	response = {}
+	if request.POST['id']:
+		item = Invoices_has_product.objects.get(id=request.POST['id'])
+		if item:
+			item.delete()
+			response['response'] = "Deleted"
+		else:
+			response['response'] = "This item does nor exist"
+	else:
+		response['response'] = "Without id"
+	return HttpResponse(json.dumps(response))
