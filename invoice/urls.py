@@ -18,11 +18,13 @@ from django.contrib import admin
 from invoice import views
 
 urlpatterns = [
-    url(r'^create_product/$', views.createProduct),
-    url(r'^remove_product/$', views.removeProduct),
-    url(r'^modified_product/$', views.modifiedProduct),
+    url(r'^products_list/$', views.getProducts),
+    url(r'^products_form/$', views.formProducts),
+    url(r'^product_create/$', views.createProduct),
+    url(r'^product_remove/$', views.removeProduct),
+    url(r'^product_modified/$', views.modifiedProduct),
     url(r'^get_product/$', views.getProduct),
-    url(r'^get_document_types/$', views.getDocumenttypes),
+    url(r'^get_document_types/$', views.getDocumentTypes),
     url(r'^create_client/$', views.createClient),
     url(r'^remove_client/$', views.removeClient),
     url(r'^modified_client/$', views.modifiedClient),

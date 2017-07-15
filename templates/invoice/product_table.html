@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Productos{% endblock %}
+{% block title-page %}Productos{% endblock %}
+{% block title-panel %}Productos{% endblock %}
 {% block content %}
 <table class="table table-bordered table-hover">
     <thead>
@@ -11,12 +13,19 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>/index.html</td>
-            <td>1265</td>
-            <td>32.3%</td>
-            <td>$321.33</td>
-        </tr>
+      {% if products %}
+        {% for product in products %}
+          <tr>
+              <td>{{ product.name }}</td>
+              <td>{{ product.packing }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.iva }}</td>
+          </tr>
+        {% endfor %}
+      {% endif %}
     </tbody>
 </table>
+<div class="text-right">
+    <a href="#">Agregar Producto <i class="fa fa-arrow-circle-right"></i></a>
+</div>
 {% endblock %}
