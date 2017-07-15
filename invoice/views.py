@@ -177,3 +177,98 @@ def getClient(request):
 		response['response'] = "Without id"
 		return HttpResponse(json.dumps(response))
 
+
+def createInvoice(request):
+	response = {}
+	if request.POST['number']:
+		number = request.POST['number']
+		if request.POST['created_at']:
+			created_at = request.POST['created_at']
+			if request.POST['total_value']:
+				total_value = request.POST['total_value']
+				total_iva = None
+				total_rte = None
+				if request.POST['total_iva']:
+					total_iva = request.POST['total_iva']
+				if request.POST['total_rte']:
+					total_rte = request.POST['total_rte']
+				if request.POST['client_id']:
+					client = Client.objects.get(id=request.POST['client_id'])
+					if request.POST['client_document_id']:
+						document_type = Document_type.objects.get(id=request.POST['client_document_type'])
+						invoice = Invoice(number=number,created_at=created_at,total_value=total_value,total_iva=total_iva,total_rte=total_rte,client_id=client,client_document_type=document_type)
+						invoice.save()			
+						response['response'] = "Creted"
+					else:
+						response['response'] = "Without document type"
+				else:
+					response['response'] = "Without client"
+			else:
+				response['response'] = "Without total_value"
+		else:
+			response['response'] = "Without created_at"
+	else:
+		response['response'] = "Without number"
+	return HttpResponse(json.dumps(response))
+
+def removeInvoice(request):
+	response = {}
+	if request.POST['id']:
+		invoice = Invoice.objects.get(id=request.POST['id'])
+		if invoice:
+			invoice.delete()
+			response['response'] = "Deleted"
+		else:
+			response['response'] = "This invoice does nor exist"
+	else:
+		response['response'] = "Without id"
+	return HttpResponse(json.dumps(response))
+
+def modifiedInvoice(request):
+	response = {}
+	if request.POST['id']:
+		invoice = Invoice.objects.get(id=request.POST['id'])
+		if invoice:
+			if request.POST['number']:
+				invoice.number = request.POST['number']
+			if request.POST['created_at']:
+				invoice.created_at = request.POST['created_at']
+			if request.POST['total_value']:
+				invoice.total_value = request.POST['total_value']
+			if request.POST['total_iva']:
+				invoice.total_iva = request.POST['total_iva']
+			if request.POST['total_rte']:
+				invoice.total_rte = request.POST['total_rte']
+			if request.POST['client_id']:
+				invoice.client_id = Client.objects.get(id=request.POST['client_id'])
+			if request.POST['client_document_type']:
+				invoice.client_document_type = Document_type.objects.get(id=request.POST['client_document_type'])
+			invoice.save()
+			response['response'] = "Modified"
+		else:
+			response['response'] = "This invoice does not exist"
+		return HttpResponse(json.dumps(response))
+	else:
+		response['response'] = "Without id"
+		return HttpResponse(json.dumps(response))
+
+def getInvoice(request):
+	response = {}
+	if request.POST['id']:
+		invoice = Invoice.objects.get(id=request.POST['id'])
+		if invoice:
+			response['number']=invoice.number
+			response['created_at']=invoice.created_at
+			response['total_value']=invoice.total_value
+			response['total_iva']=invoice.total_iva
+			response['total_rte']=invoice.total_rte
+			response['client_id']=invoice.client_id
+			response['client_document_type']=invoice.client_document_type
+			return HttpResponse(json.dumps(response))
+		else:
+			response['response'] = "This invoice does not exist"
+			return HttpResponse(json.dumps(response))
+	else:
+		response['response'] = "Without id"
+		return HttpResponse(json.dumps(response))
+

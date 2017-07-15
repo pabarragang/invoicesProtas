@@ -27,4 +27,8 @@ urlpatterns = [
     url(r'^remove_client/$', views.removeClient),
     url(r'^modified_client/$', views.modifiedClient),
     url(r'^get_client/$', views.getClient),
+    url(r'^create_invoice/$', views.createInvoice),
+    url(r'^remove_invoice/$', views.removeInvoice),
+    url(r'^modified_invoice/$', views.modifiedInvoice),
+    url(r'^get_invoice/$', views.getInvoice),
 ]
