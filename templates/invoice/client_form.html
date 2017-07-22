@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Agregar Cliente{% endblock %}
-{% block title-page %}Agregar Cliente{% endblock %}
-{% block title-panel %}Agregar Cliente{% endblock %}
+{% block title %}{% if client %}Editar Cliente{% else %}Agregar Cliente{% endif %}{% endblock %}
+{% block title-page %}{% if client %}Editar Cliente{% else %}Agregar Cliente{% endif %}{% endblock %}
+{% block title-panel %}{% if client %}Editar Cliente{% else %}Agregar Cliente{% endif %}{% endblock %}
 {% block content %}
 <form role="form" method="post" action="/invoice/save_client/">
     {% csrf_token %}

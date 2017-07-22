@@ -1,7 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Agregar Producto{% endblock %}
-{% block title-page %}Agregar Producto{% endblock %}
-{% block title-panel %}Agregar Producto{% endblock %}
+{% block title %}
+{% if product %}Editar Producto{% else %}Agregar Producto{% endif %}{% endblock %}
+{% block title-page %}{% if product %}Editar Producto{% else %}Agregar Producto{% endif %}{% endblock %}
+{% block title-panel %}{% if product %}Editar Producto{% else %}Agregar Producto{% endif %}{% endblock %}
 {% block content %}
 <form role="form" method="post" action="/invoice/save_product/">
   {% csrf_token %}

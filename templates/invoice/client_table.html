@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block title-page %}Clientes{% endblock %}
+{% block title-panel %}Clientes{% endblock %}
+{% block content %}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Tipo de Documento</th>
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Celular</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% if clients %}
+        {% for client in clients %}
+          <tr>
+              <td>{{ client.document_type.name }}</td>
+              <td>{{ client.document }}</td>
+              <td>{{ client.name }} {{ client.last_name }}</td>
+              <td>{{ client.address }}</td>
+              <td>{{ client.phone }}</td>
+              <td>{{ client.cell_phone }}</td>
+              <td>
+                <a href="/invoice/form_clients/?id_client={{ client.id }}">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+</table>
+<div class="text-right">
+    <a href="/invoice/form_clients/"><span class="glyphicon glyphicon-plus"></span> Agregar Cliente</a>
+</div>
+{% endblock %}
