@@ -9,7 +9,7 @@ class Product(models.Model):
 	price = models.IntegerField()
 	iva = models.FloatField(null=True)
 
-class Document_type(models.Model):
+class DocumentType(models.Model):
 	name = models.CharField(max_length=45,null=False,blank=False)
 
 class Client(models.Model):
@@ -19,7 +19,7 @@ class Client(models.Model):
 	address = models.CharField(max_length=45,null=False,blank=False)
 	phone = models.CharField(max_length=7,null=True,blank=False)
 	cell_phone = models.CharField(max_length=10,null=False,blank=False)
-	document_type = models.ForeignKey(Document_type)
+	document_type = models.ForeignKey(DocumentType)
 
 class Invoice(models.Model):
 	number = models.CharField(max_length=45,null=False,blank=False)
@@ -28,7 +28,7 @@ class Invoice(models.Model):
 	total_iva = models.IntegerField()
 	total_rte = models.IntegerField()
 	client_id = models.ForeignKey(Client, null=False,blank=False)
-	client_document_type = models.ForeignKey(Document_type)
+	client_document_type = models.ForeignKey(DocumentType)
 
 class Invoices_has_product(models.Model):
 	invoice = models.ForeignKey(Invoice,null=False,blank=False)

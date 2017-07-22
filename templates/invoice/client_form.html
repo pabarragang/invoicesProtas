@@ -1,40 +1,58 @@
 {% extends "base.html" %}
 {% block title %}Agregar Cliente{% endblock %}
+{% block title-page %}Agregar Cliente{% endblock %}
+{% block title-panel %}Agregar Cliente{% endblock %}
 {% block content %}
-<form role="form">
+<form role="form" method="post" action="/invoice/save_client/">
+    {% csrf_token %}
+    <input type="hidden" name="id" class="form-control" value="{{ client.id }}" required>
     <div class="form-group">
         <label>Tipo de Documento</label>
-        <input class="form-control">
+        <select class="form-control" name="document_type">
+          {% for document_type in document_types %}
+            {% if client.document_type.id == document_type.id %}
+              <option value="{{ document_type.id }}" selected>{{ document_type.name }}</option>
+            {% else %}
+            <option value="{{ document_type.id }}">{{ document_type.name }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
     </div>
 
     <div class="form-group">
         <label>Documento</label>
-        <input type="text" class="form-control">
+        <input type="number" name="document" class="form-control" value="{{ client.document }}" required>
     </div>
 
     <div class="form-group">
         <label>Nombre</label>
-        <input type="text" class="form-control">
+        <input type="text" name="name" class="form-control" value="{{ client.name }}" required>
     </div>
 
     <div class="form-group">
         <label>Apellido</label>
-        <input type="text" class="form-control">
+        <input type="text" name="last_name" class="form-control" value="{{ client.last_name }}" required>
     </div>
 
     <div class="form-group">
         <label>Dirección</label>
-        <input type="text" class="form-control">
+        <input type="text" name="address" class="form-control" value="{{ client.address }}" required>
     </div>
 
     <div class="form-group">
         <label>Teléfono</label>
-        <input type="text" class="form-control">
+        <input type="number" name="phone" class="form-control" value="{{ client.phone }}">
     </div>
 
     <div class="form-group">
         <label>Celular</label>
-        <input type="text" class="form-control">
+        <input type="number" name="cell_phone" class="form-control" value="{{ client.cell_phone }}"required>
     </div>
+
+    <button type="submit" class="btn btn-default">Guardar</button>
+    <button type="reset" class="btn btn-default">Borrar</button>
 </form>
+<div class="text-right">
+    <a href="/invoice/list_clients/"><span class="fa fa-arrow-circle-left"></span> Volver</a>
+</div>
 {% endblock %}
