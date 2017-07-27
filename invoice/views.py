@@ -61,6 +61,22 @@ def removeProduct(request):
     return HttpResponse(json.dumps(response))
 
 
+def suggestionsProduct(request):
+    response = {}
+    if request.method == 'GET':
+        try:
+            search_text = request.GET['search_text']
+            products = Product.objects.filter(name__contains=search_text)
+            dictProducts = [{'id': product.id, 'name': product.name}
+                            for product in products]
+            response = JsonResponse({'products': dictProducts})
+        except Exception as e:
+            response = JsonResponse({'error': str(e)})
+    else:
+        response = JsonResponse({'error': 'no methos post allowed'})
+    return response
+
+
 def getClients(request):
     clients = Client.objects.all()
     template = loader.get_template('invoice/client_table.html')
@@ -117,6 +133,24 @@ def removeClient(request):
     else:
         response['response'] = "Without id"
     return HttpResponse(json.dumps(response))
+
+
+def getInvoices(request):
+    invoices = Invoice.objects.all()
+    template = loader.get_template('invoice/invoice_table.html')
+    context = {'invoices': invoices}
+    return HttpResponse(template.render(context, request))
+
+
+def formInvoices(request):
+    template = loader.get_template('invoice/invoice_form.html')
+    context = {}
+    try:
+        product = Product.objects.get(pk=request.GET['id_product'])
+        context = {'product': product}
+    except Exception:
+        pass
+    return HttpResponse(template.render(context, request))
 
 
 def createInvoice(request):

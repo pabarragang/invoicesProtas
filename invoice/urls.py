@@ -14,19 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
 from invoice import views
 
 urlpatterns = [
     url(r'^list_products/$', views.getProducts),
     url(r'^form_products/$', views.formProducts),
     url(r'^save_product/$', views.saveProduct),
+    url(r'^suggestions_product/$', views.suggestionsProduct),
 
     url(r'^remove_product/$', views.removeProduct),
 
     url(r'^list_clients/$', views.getClients),
     url(r'^form_clients/$', views.formClients),
     url(r'^save_client/$', views.saveClient),
+
+    url(r'^list_invoices/$', views.getInvoices),
+    url(r'^form_invoices/$', views.formInvoices),
 
     url(r'^create_invoice/$', views.createInvoice),
     url(r'^remove_invoice/$', views.removeInvoice),

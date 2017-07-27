@@ -3,7 +3,7 @@
 {% block title-page %}Clientes{% endblock %}
 {% block title-panel %}Clientes{% endblock %}
 {% block content %}
-<table class="table table-bordered table-hover">
+<table id="table_id" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Tipo de Documento</th>
@@ -39,4 +39,9 @@
 <div class="text-right">
     <a href="/invoice/form_clients/"><span class="glyphicon glyphicon-plus"></span> Agregar Cliente</a>
 </div>
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
 {% endblock %}

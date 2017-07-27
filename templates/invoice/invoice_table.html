@@ -1,26 +1,49 @@
 {% extends "base.html" %}
 {% block title %}Facturas{% endblock %}
+{% block title-page %}Facturas{% endblock %}
+{% block title-panel %}Facturas{% endblock %}
 {% block content %}
-<table class="table table-bordered table-hover">
+<table id="table_id" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Número</th>
-            <th>Cliente</th>
             <th>Fecha de Creación</th>
             <th>Valor Total</th>
             <th>IVA</th>
             <th>Retefuente</th>
+            <th>Cliente</th>
+            <th>Identificación</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>/index.html</td>
-            <td>1265</td>
-            <td>32.3%</td>
-            <td>$321.33</td>
-            <td>32.3%</td>
-            <td>$321.33</td>
-        </tr>
+      {% if invoices %}
+        {% for invoice in invoices %}
+          <tr>
+              <td>{{ invoice.number }}</td>
+              <td>{{ invoice.created_at }}</td>
+              <td>{{ invoice.total_value }}</td>
+              <td>{{ invoice.total_iva }}</td>
+              <td>{{ invoice.total_rte }}</td>
+              <td>{{ invoice.client_id }}</td>
+              <td>{{ invoice.client_document_type.name }}</td>
+              <td>
+                <a href="/invoice/form_clients/?id_client={{ client.id }}">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </td>
+          </tr>
+        {% endfor %}
+      {% endif %}
     </tbody>
 </table>
+<div class="text-right">
+    <a href="/invoice/form_invoices/"><span class="glyphicon glyphicon-plus"></span> Agregar Factura</a>
+</div>
+<script>
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );
+</script>
 {% endblock %}
