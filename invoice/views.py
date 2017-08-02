@@ -135,6 +135,24 @@ def removeClient(request):
     return HttpResponse(json.dumps(response))
 
 
+def suggestionsClient(request):
+    response = {}
+    if request.method == 'GET':
+        try:
+            search_text = request.GET['search_text']
+            clients = Client.objects.filter(name__contains=search_text)
+            print clients.query
+            dictClients = [{'id': client.id,
+                            'name': client.name + ' ' + client.last_name}
+                           for client in clients]
+            response = JsonResponse({'clients': dictClients})
+        except Exception as e:
+            response = JsonResponse({'error': str(e)})
+    else:
+        response = JsonResponse({'error': 'no method post allowed'})
+    return response
+
+
 def getInvoices(request):
     invoices = Invoice.objects.all()
     template = loader.get_template('invoice/invoice_table.html')
@@ -153,45 +171,20 @@ def formInvoices(request):
     return HttpResponse(template.render(context, request))
 
 
-def createInvoice(request):
+def saveInvoice(request):
     response = {}
-    if request.POST['number']:
-        number = request.POST['number']
-        if request.POST['created_at']:
-            created_at = request.POST['created_at']
-            if request.POST['total_value']:
-                total_value = request.POST['total_value']
-                total_iva = None
-                total_rte = None
-                if request.POST['total_iva']:
-                    total_iva = request.POST['total_iva']
-                if request.POST['total_rte']:
-                    total_rte = request.POST['total_rte']
-                if request.POST['client_id']:
-                    client = Client.objects.get(id=request.POST['client_id'])
-                    if request.POST['client_document_id']:
-                        document_type = Document_type.objects.get(
-                            id=request.POST['client_document_type'])
-                        invoice = Invoice(number=number,
-                                          created_at=created_at,
-                                          total_value=total_value,
-                                          total_iva=total_iva,
-                                          total_rte=total_rte,
-                                          client_id=client,
-                                          client_document_type=document_type)
-                        invoice.save()
-                        response['response'] = "Creted"
-                    else:
-                        response['response'] = "Without document type"
-                else:
-                    response['response'] = "Without client"
-            else:
-                response['response'] = "Without total_value"
-        else:
-            response['response'] = "Without created_at"
+    if request.method == 'POST':
+        try:
+            invoice = Invoice()
+            invoice.number = request.POST['number']
+            invoice.client_id = Client.objects.get(id=request.POST['client_id'])
+            invoice.save()
+            response = JsonResponse({'id_invoice': str(invoice.id)})
+        except Exception as e:
+            response = JsonResponse({'error': str(e)})
     else:
-        response['response'] = "Without number"
-    return HttpResponse(json.dumps(response))
+        response = JsonResponse({'error': 'no method get allowed'})
+    return response
 
 
 def removeInvoice(request):

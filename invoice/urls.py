@@ -27,11 +27,12 @@ urlpatterns = [
     url(r'^list_clients/$', views.getClients),
     url(r'^form_clients/$', views.formClients),
     url(r'^save_client/$', views.saveClient),
+    url(r'^suggestions_client/$', views.suggestionsClient),
 
     url(r'^list_invoices/$', views.getInvoices),
     url(r'^form_invoices/$', views.formInvoices),
 
-    url(r'^create_invoice/$', views.createInvoice),
+    url(r'^save_invoice/$', views.saveInvoice),
     url(r'^remove_invoice/$', views.removeInvoice),
     url(r'^modified_invoice/$', views.modifiedInvoice),
     url(r'^get_invoice/$', views.getInvoice),

@@ -28,12 +28,11 @@ class Client(models.Model):
 
 class Invoice(models.Model):
     number = models.CharField(max_length=45, null=False, blank=False)
-    created_at = models.DateTimeField(null=False, blank=False)
+    created_at = models.DateTimeField(null=False, auto_now_add=True)
     total_value = models.IntegerField()
     total_iva = models.IntegerField()
     total_rte = models.IntegerField()
     client_id = models.ForeignKey(Client, null=False, blank=False)
-    client_document_type = models.ForeignKey(DocumentType)
 
 
 class Invoices_has_product(models.Model):
